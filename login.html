@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="css/csst9402.css"/>
+</head>
+<body>
+<div class="login">
+    <div class="login-top">
+        <p class="dlu">登录</p>
+        <p class="clwzhzc">若无账号<a href="reg.html">立即注册</a></p>
+    </div>
+    <div class="login-nr">
+        <div class="login-nr-inp">
+            <input type="text" name="" id="user"  placeholder="请输入用户名/手机号" />
+        </div>
+        <div class="login-nr-inp">
+            <input type="password" name="" id="pwd"  placeholder="请输入登录密码" />
+        </div>
+        <div class="login-nr-inp">
+            <input type="text" name="" id="code"  placeholder="请输入验证码" />
+            <p class="yzm">1258</p>
+        </div>
+        <span id="msg"></span>
+        <div class="wjmm"><a href="忘记密码.html">忘记密码</a></div>
+    </div>
+</div>
+<div class="login-nr-dl">
+    <input type="button"  id="login" value="登录"  />
+</div>
+<div style="height: 4em;"></div>
+</body>
+</html>
+<script src="/js/jquery.min.js"></script>
+<script>
+    $("#login").click(function () {
+        const user=$("#user").val()
+        const pwd=$("#pwd").val()
+        const code=$("#code").val()
+        $.ajax({
+            url:"http://apinode.shop1.com/users/login",
+            type:"post",
+            data:{user:user,pwd:pwd,code:code},
+            dataType:"json",
+            success:function (ked) {
+                if(ked.code==1){
+                    document.cookie="token="+ked.data;
+                    window.location.href="index.html";
+                }else{
+                    $("#msg").html("<font color='red'>"+ked.msg+"</font>")
+                }
+            }
+        })
+    })
+</script>
